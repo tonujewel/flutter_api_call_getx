@@ -16,19 +16,35 @@ class HomePage extends StatelessWidget {
       body: Column(children: [
         Expanded(
           child: Obx(
-            () => StaggeredGridView.countBuilder(
-              crossAxisCount: 2,
+            () => GridView.builder(
               itemCount: commentsController.commentsList.length,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
+              padding: EdgeInsets.only(right: 8,left: 8),
+              gridDelegate:
+              new SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2),
               itemBuilder: (context, index) {
-                return Container(
-                  height: 200,
-                  width: 200,
-                  decoration: BoxDecoration(color: Colors.red),
+                return Card(
+                  elevation: 4,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Text("${commentsController.commentsList[index].name}",
+                            maxLines: 1,
+                            style: TextStyle(color: Colors.grey[600], fontWeight: FontWeight.bold,)),
+                        SizedBox(height: 10),
+                        Text("${commentsController.commentsList[index].email}",
+                            maxLines: 1,
+                            style: TextStyle(color: Colors.grey[600])),
+                        SizedBox(height: 10),
+                        Text("${commentsController.commentsList[index].body}",
+                            maxLines: 3,
+                            style: TextStyle(color: Colors.grey[600])),
+                      ],
+                    ),
+                  ),
                 );
               },
-              staggeredTileBuilder: (index) => StaggeredTile.fit(1),
             ),
           ),
         )
